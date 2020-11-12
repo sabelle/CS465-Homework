@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">CS465_HW3_sabelle2</string>
+    <string name="posts">posts</string>
+    <string name="followers">followers</string>
+    <string name="following">following</string>
+    <string name="posts_count">334</string>
+    <string name="followers_count">211K</string>
+    <string name="following_count">134</string>
+    <string name="message">Message</string>
+    <string name="name">John Doe</string>
+    <string name="bio">Discovering stories around the world.</string>
+    <string name="website">johndoe.illinois.edu</string>
+    <string name="highlight_live">Live</string>
+    <string name="highlight_fav">Fav</string>
+    <string name="highlight_cats">Cats</string>
+    <string name="highlight_summer">Summer</string>
+</resources>

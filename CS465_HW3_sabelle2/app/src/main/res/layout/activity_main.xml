@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--This layout is grouped in 4 "giant" containers:
+1. info heading bar: contains profile picture, and a count of posts, followers, and following
+2. bio: account name, bio, website, highlights
+3. icon bar: a row of three icons allowing for grid view of posts, list view of posts, and a
+   view of all the photos the user is tagged in
+4. photo grid: 9 photos
+
+I believe it would be better practice to also group containers 1, 2, 3 together,
+as 1, 2, and 3 deal with providing some kind of information about the user, whereas container 4
+is a collection of the user's uploaded photos. I chose to not create an additional container
+around 1, 2, and 3 so that I could better isolate and visualize different parts of this UI.-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--Scrollview can only have one child, so we must wrap the entire screen contents
+    inside a linear layout container. source: stack overflow
+    https://stackoverflow.com/questions/6674341/how-to-use-scrollview-in-android-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="top">
+        <!--The cat profile picture, along with info bar (posts, followers, following)
+        should all be wrapped inside a container. On the left is the cat, on the right
+        is a container that wraps the other info.-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="15dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <!--The cat profile needs to be wrapped inside a container itself so that
+            the image expands correctly when the phone is flipped horizontally.-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="2"
+                android:gravity="center">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:cardCornerRadius="50dp"
+                android:gravity="center">
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/profile"/>
+            </androidx.cardview.widget.CardView>
+            </LinearLayout>
+            <!--For the stuff to the right of the cat profile picture, we have 2 lines of info
+            (posts, followers, following), followed by a row of buttons, so we will need to
+            create 3 horizontal containers stacked atop (vertically) one another.
+            This requires 3 horz layouts nested inside a vertical linear layout-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/posts_count"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textAlignment="center"
+                        android:gravity="center|bottom"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/followers_count"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textAlignment="center"
+                        android:gravity="center|bottom"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/following_count"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textAlignment="center"
+                        android:gravity="center|bottom"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/posts"
+                        android:textAlignment="center"
+                        android:gravity="center|top"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/followers"
+                        android:textAlignment="center"
+                        android:gravity="center|top"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/following"
+                        android:textAlignment="center"
+                        android:gravity="center|top"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+                    <!--added padding to button to icon buttons to adjust for spacing. Used
+                    3 button components at first, but really struggled to work with layout_weight
+                    so I ended up using imagebutton for the icon buttons. The buttons are a custom
+                    shape with a grey outline for a shadow effect-->
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_gravity="fill_horizontal"
+                        android:text="@string/message"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textAllCaps="false"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:background="@drawable/white_button"/>
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="fill_horizontal"
+                        android:layout_weight="0"
+                        android:paddingHorizontal="10dp"
+                        android:gravity="center"
+                        android:src="@drawable/person_followed"
+                        android:background="@drawable/white_button"/>
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="fill_horizontal"
+                        android:layout_weight="0"
+                        android:paddingHorizontal="10dp"
+                        android:gravity="center"
+                        android:src="@drawable/down_arrow"
+                        android:background="@drawable/white_button"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--This container is for the bio (account name, bio, website, and highlights. The
+        highlights will be contained in another container so that they can be lined up horizontally-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="15dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/name"
+                android:textAlignment="textStart"
+                android:textStyle="bold"
+                android:gravity="start"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/bio"
+                android:textAlignment="textStart"
+                android:gravity="start"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/website"
+                android:textAlignment="textStart"
+                android:autoLink="web"
+                android:gravity="start"/>
+        </LinearLayout>
+        <!--Each highlight consists of 2 parts: photo icon and highlight name. So each highlight
+        will be put in a container (vertical alignment) and then all the highlights will be grouped
+        together in an additional container (horizontal alignment)-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="15dp"
+                android:orientation="vertical">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/highlight_live"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:cardCornerRadius="50dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/live_cover"/>
+                </androidx.cardview.widget.CardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/highlight_live"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:orientation="vertical">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/highlight_fav"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:cardCornerRadius="50dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/fave_cover"/>
+                </androidx.cardview.widget.CardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/highlight_fav"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:orientation="vertical">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/highlight_cats"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:cardCornerRadius="50dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/cats_cover"/>
+                </androidx.cardview.widget.CardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/highlight_cats"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:orientation="vertical">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/highlight_summer"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:cardCornerRadius="50dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/summer_cover"/>
+                </androidx.cardview.widget.CardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/highlight_summer"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--icon bar that has horizontal lines surrounding the 3 white, borderless buttons to
+        create the effect of section dividers/shadows-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/lightGrey"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:orientation="horizontal">
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/grid"
+                android:background="@color/white"/>
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/bulleted_list"
+                android:background="@color/white"/>
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/tagged_photos"
+                android:background="@color/white"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/lightGrey" />
+
+        <!--photo grid: I am creating a "grid" view by grouping 3 images in a horizontal linear layout
+        and stacking multiple groups of these layouts. The effect of stacking rows of images together
+        creates a grid.-->
+        <!--row 1-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="2.5dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/gallery_1"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="2.5dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/gallery_2"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="2.5dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/gallery_3"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--row 2-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="2.5dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="2.5dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/gallery_4"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="2.5dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/gallery_5"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="2.5dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/gallery_6"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--row 3-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="2.5dp"
+            android:layout_marginBottom="1dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="2.5dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/gallery_7"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="2.5dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/gallery_8"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="2.5dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/gallery_9"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <!--Here is an example of how the circular profile photo was created in the upper left of the
+    solution image. This should be one of the few instances where a fixed width and height is used -->
+    <!--            <androidx.cardview.widget.CardView
+                        android:id="@+id/cardView"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        app:cardCornerRadius="50dp">
+
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/profile" />
+                    </androidx.cardview.widget.CardView>
+
+    -->
+
+
+</ScrollView>
